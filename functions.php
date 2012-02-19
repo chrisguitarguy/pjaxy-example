@@ -1,24 +1,20 @@
 <?php
-define( 'PJAXY_PATH', trailingslashit( get_template_directory() ) );
-define( 'PJAXY_URL', get_template_directory_uri() );
+define( 'PJAXY_PATH', trailingslashit( get_stylesheet_directory() ) );
+define( 'PJAXY_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 
 if( is_admin() ) {
     
 } else {
     require_once( PJAXY_PATH . 'inc/pjax-core.php' );
-    require_once( PJAXY_PATH . 'inc/front-enqueue.php' );
 }
 
-add_action( 'after_setup_theme', 'pjaxy_setup_theme' );
-function pjaxy_setup_theme() {
-    
-}
-
-add_action( 'template_redirect', 'pjaxy_testing' );
-function pjaxy_testing()
+add_action( 'wp_enqueue_scripts', 'pjaxy_make_it_happen' );
+function pjaxy_make_it_happen()
 {
-    if( is_pjax() ) {
-        echo 'yep';
-        exit();
-    }
+    wp_enqueue_script(
+        'pjaxy-core',
+        PJAXY_URL . 'js/pjaxy.js',
+        array( 'jquery-pjax' ),
+        NULL
+    );
 }
