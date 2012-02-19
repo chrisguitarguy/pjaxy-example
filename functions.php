@@ -2,9 +2,7 @@
 define( 'PJAXY_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'PJAXY_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 
-if( is_admin() ) {
-    
-} else {
+if( ! is_admin() ) {
     require_once( PJAXY_PATH . 'inc/pjax-core.php' );
 }
 
