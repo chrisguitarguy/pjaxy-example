@@ -6,19 +6,8 @@ if( ! is_admin() ) {
     require_once( PJAXY_PATH . 'pjaxy/pjax-core.php' );
 }
 
-add_action( 'wp_enqueue_scripts', 'pjaxy_make_it_happen' );
-function pjaxy_make_it_happen()
-{
-    wp_enqueue_script(
-        'pjaxy-core',
-        PJAXY_URL . 'js/pjaxy.js',
-        array( 'jquery-pjax' ),
-        NULL
-    );
-}
-
-add_filter( 'pjaxy_page_info', 'pjaxy_twenty_elevent_img' );
-function pjaxy_twenty_elevent_img( $info )
+add_filter( 'pjaxy_page_info', 'pjaxy_twentyeleven_img' );
+function pjaxy_twentyeleven_img( $info )
 {
     if( is_singular() ) {
         $post = get_queried_object();
@@ -34,4 +23,9 @@ function pjaxy_twenty_elevent_img( $info )
     return $info;
 }
 
-
+add_action( 'after_setup_theme', 'pjaxy_twentyeleven_setup' );
+function pjaxy_twentyeleven_setup()
+{
+    define( 'PJAXY_CONTAINER', '#main' );
+    define( 'PJAXY_HEADER_IMG', 'header#branding > a img' );
+}

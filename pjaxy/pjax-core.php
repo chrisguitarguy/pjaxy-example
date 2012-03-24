@@ -73,14 +73,33 @@ add_action( 'wp_enqueue_scripts', 'pjaxy_enqueue_pjax' );
 function pjaxy_enqueue_pjax()
 {
     $uri = trailingslashit( get_stylesheet_directory_uri() );
-    $dir = basename( dirname( __FILE__ ) );
-    $uri = apply_filters( 'pjaxy_uri', $uri . $dir . '/pjax/jquery.pjax.js' );
+    $dir = trailingslashit( basename( dirname( __FILE__ ) ) );
+    $uri = $uri . $dir;
     wp_enqueue_script(
         'jquery-pjax', 
-        $uri,
+        $uri . 'pjax/jquery.pjax.js',
         array( 'jquery' ),
         NULL
     );
+
+    if( ! defined( 'PJAXY_CONTAINER' ) ) return;
+
+    wp_enqueue_script(
+        'pjaxy-core',
+        $uri . 'js/pjaxy.js',
+        array( 'jquery-pjax' ),
+        NULL
+    );
+
+    wp_localize_script(
+        'pjaxy-core',
+        'pjaxy_core',
+        array(
+            'container' => PJAXY_CONTAINER,
+            'header'    => defined( 'PJAXY_HEADER_IMG' ) ? PJAXY_HEADER_IMG : false
+        )
+    );
+
 }
 
 add_filter( 'home_template', 'pjaxy_index_template' );
