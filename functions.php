@@ -3,7 +3,7 @@ define( 'PJAXY_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'PJAXY_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 
 if( ! is_admin() ) {
-    require_once( PJAXY_PATH . 'pjaxy/pjax-core.php' );
+    require_once( PJAXY_PATH . 'pjaxy/load.php' );
 }
 
 add_filter( 'pjaxy_page_info', 'pjaxy_twentyeleven_img' );
@@ -26,6 +26,7 @@ function pjaxy_twentyeleven_img( $info )
 add_action( 'after_setup_theme', 'pjaxy_twentyeleven_setup' );
 function pjaxy_twentyeleven_setup()
 {
+    add_theme_support( 'pjax' );
     define( 'PJAXY_CONTAINER', '#main' );
     define( 'PJAXY_HEADER_IMG', 'header#branding > a img' );
 }
