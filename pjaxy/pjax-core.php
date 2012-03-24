@@ -42,7 +42,26 @@ function is_pjax()
  */
 function get_pjaxy_page_info() 
 {
-    require_once( trailingslashit( dirname( __FILE__ ) ) . 'page-info.php' );
+    $info = array(
+        'body_class'    => join( ' ', get_body_class( 'pjax-loaded' ) ),
+        'page_title'    => wp_title( '', false ),
+    );
+    if( current_theme_supports( 'custom-header' ) )
+    {
+        $info['header_img'] = get_header_image();
+        $info['header_width'] = defined( 'HEADER_IMAGE_WIDTH' ) ? HEADER_IMAGE_WIDTH : 0;
+        $info['header_height'] = defined( 'HEADER_IMAGE_HEIGHT' ) ? HEADER_IMAGE_HEIGHT : 0;
+    }
+    echo "<script type='text/javascript' id='pjaxy-page-info'>\n";
+    echo "var pjaxy_page_info = {\n";
+    foreach( apply_filters( 'pjaxy_page_info', $info ) as $key => $val )
+    {
+        echo "'{$key}': ";
+        echo '"' . esc_js( $val ) . '"';
+        echo ",\n";
+    }
+    echo "}\n";
+    echo '</script>';
 }
 
 add_action( 'wp_enqueue_scripts', 'pjaxy_enqueue_pjax' );
