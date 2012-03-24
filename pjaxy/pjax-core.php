@@ -53,9 +53,12 @@ add_action( 'wp_enqueue_scripts', 'pjaxy_enqueue_pjax' );
  */
 function pjaxy_enqueue_pjax()
 {
+    $uri = trailingslashit( get_stylesheet_directory_uri() );
+    $dir = basename( dirname( __FILE__ ) );
+    $uri = apply_filters( 'pjaxy_uri', $uri . $dir . '/pjax/jquery.pjax.js' );
     wp_enqueue_script(
         'jquery-pjax', 
-        PJAXY_URL . 'js/pjax/jquery.pjax.js',
+        $uri,
         array( 'jquery' ),
         NULL
     );
