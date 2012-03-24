@@ -42,7 +42,7 @@ function is_pjax()
  */
 function get_pjaxy_page_info() 
 {
-    require_once( PJAXY_PATH . 'inc/page-info.php' );
+    require_once( trailingslashit( dirname( __FILE__ ) ) . 'page-info.php' );
 }
 
 add_action( 'wp_enqueue_scripts', 'pjaxy_enqueue_pjax' );
