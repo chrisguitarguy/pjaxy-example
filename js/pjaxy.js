@@ -1,7 +1,5 @@
 jQuery(document).ready(function() {
-    jQuery('a').pjax('#main').live('click', function(){
-        
-    });
+    jQuery('a').pjax('#main');
     jQuery('#main').bind('pjax:end', function(){
         if(typeof(pjaxy_page_info) != 'undefined') {
             jQuery('body').attr('class', pjaxy_page_info.body_class);
