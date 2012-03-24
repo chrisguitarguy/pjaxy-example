@@ -185,7 +185,7 @@ function pjaxy_attachment_template( $template )
     if( is_pjax() ) {
         global $posts;
         $type = explode( '/', $posts[0]->post_mime_type );
-        $temps = array( "{type[0]}.php", "{$type[1]}.php", "{$type[0]}-{$type[1]}.php", 'attachment.php' );
+        $temps = array( "{$type[0]}.php", "{$type[1]}.php", "{$type[0]}-{$type[1]}.php", 'attachment.php' );
         if( $t = pjaxy_find_template( $temps ) ) {
             $template = $t;
         }
